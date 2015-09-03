@@ -3,8 +3,8 @@ require_relative 'game'
 require_relative 'player'
 
 class RPSWeb < Sinatra::Base
-
   set :views, proc { File.join(root, '..', 'views') }
+  
   enable :sessions
 
   get '/' do
@@ -12,7 +12,6 @@ class RPSWeb < Sinatra::Base
   end
 
   post '/setup_holding' do
-
     if $game == nil
       player_1 = Player.new
       player_2 = Player.new
@@ -29,7 +28,6 @@ class RPSWeb < Sinatra::Base
   end
 
   get '/setup_holding' do
-
     if $game.player_2.name != 'no_name'
       redirect '/play_game'
     else
@@ -38,18 +36,18 @@ class RPSWeb < Sinatra::Base
   end
 
   get '/play_game' do
-
     erb :play_game
   end
 
   post '/play_game' do
-
     $game.send(session[:name]).select(params[:game_select].downcase.to_sym)
+
     if $game.player_1.total_selections == $game.player_2.total_selections
       $message = $game.play
     else
       redirect '/play_game_holding'
     end
+
     redirect '/victory' if $game.games_played == 5
     erb :play_game
   end
@@ -64,7 +62,6 @@ class RPSWeb < Sinatra::Base
 
   get '/victory' do
     erb :victory
-
   end
 
   run! if app_file == $0

@@ -1,10 +1,8 @@
 class Player
-
   attr_accessor :name, :total_selections, :wins, :losses, :draws
   attr_reader :current_selection
 
   def initialize name = 'no_name'
-
     @name = name
     @current_selection = nil
     @total_selections = 0
